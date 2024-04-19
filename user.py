@@ -1,4 +1,6 @@
-class Receiver:
+"""All the attributes in the Customers classes are private they can't be accessed from outside."""
+
+class Receiver: #To whom we are transferring money
     def __init__(self, acc_no, name):
         self.__acc_no = acc_no
         self.__name = name 
@@ -8,7 +10,7 @@ class Receiver:
         return self.__name
         
 
-class UserForLogin:
+class UserForLogin: #Customer who logs in for making transactions
     def __init__(self, acc_no, pin):
         self.__acc_no = acc_no
         self.__pin = pin 
@@ -18,7 +20,7 @@ class UserForLogin:
         return self.__pin
         
         
-class User:
+class User: #User class is used for registrations for new users
     def __init__(self, acc_no, acc_holder, pin):
         self.__acc_no = acc_no
         self.__acc_holder = acc_holder
