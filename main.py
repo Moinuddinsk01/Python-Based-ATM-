@@ -1,5 +1,5 @@
-from user import *
-from atm import *
+from user import * #user module which contains types of users
+from atm import * #atm module which is virtual ATM and has datase
 import time
 import random
 
@@ -9,17 +9,17 @@ time.sleep(1)
 print()
 print()
 
-def generate_account_number():
+def generate_account_number(): #generating 12 digit accout number
     number = ''.join([str(random.randint(0, 9)) for _ in range(12)])
     return number
 
-def start():
-    check = input("""Choose the option
+def start(): # this is the start of the project 
+    check = input("""Choose the option 
         1. Login
         2. New user
         3. Exit
       """)
-      
+    # user can choose these options, each does their operations
     if check == "1":
         login()
     elif check == "2":
@@ -35,9 +35,9 @@ def start():
         start()
 
 
-atm = ATM()
+atm = ATM() # atm instance as ATM machine
 
-def balanceCheck(obj):
+def balanceCheck(obj): #this function used for checking balance, written seperately because this block is used 4-5 times
     balance = atm.checkBalance(obj)
     print(obj.getAccHolderName()+'(xxxxxxxx'+obj.getAccNo()[-4:]+'),',"your available balance is",balance)
     time.sleep(1)
@@ -45,7 +45,7 @@ def balanceCheck(obj):
     time.sleep(1)
     start()
 
-def chooseFunctionality(obj):
+def chooseFunctionality(obj): #after logging in successfully, user can do these functionalities
     check = input("""What do you want to do ?
         1. Withdraw
         2. Deposit
@@ -55,6 +55,7 @@ def chooseFunctionality(obj):
         6. Transfer money
         7. Exit
     """)
+    #user can do these 7 functionalities, if user chooses other than these options user will be suggested to choose among these options
     if check == "1":
         check_amount = input("""......Quick withdrawal.....
      Select the amount 
@@ -65,6 +66,7 @@ def chooseFunctionality(obj):
          5. 10000
          6. Other
                      """)
+        #With Quick withdrawal we can reduce user's efforts
         if check_amount == "1":
             amount = 100 
         elif check_amount == "2":
@@ -81,7 +83,7 @@ def chooseFunctionality(obj):
             print("Choose the option properly...")
             time.sleep(1)
             start()
-        res = atm.withdraw(obj, amount)
+        res = atm.withdraw(obj, amount) # calls withdraw function of atm 
         if res == 3:
             print("Rs"+str(amount), "has been debited from xxxxxxxx"+obj.getAccNo()[-4:])
             checkBal = input("Do you want to check the available balance? Yes/No: ")
@@ -89,7 +91,7 @@ def chooseFunctionality(obj):
                 balanceCheck(obj)
             else:
                 start()
-        elif res == 1:
+        elif res == 1: # if res return 1 means that the ATM doesn't have enough money and user reported that
             print("Thank you for reporting....")
             time.sleep(1)
             print("You can use the ATM now.")
@@ -98,7 +100,7 @@ def chooseFunctionality(obj):
         else:
             start()
             
-    elif check == "2":
+    elif check == "2": #if it is 2 users chose to deposit
         amount = int(input("Enter the amount: "))
         atm.deposit(obj, amount)
         time.sleep(1)
@@ -108,9 +110,9 @@ def chooseFunctionality(obj):
             balanceCheck(obj)
         else:
             start()
-    elif check == "3":
+    elif check == "3": #chaning the pin 
         newPin = input("Set your 4 digit new pin: ")
-        while newPin == obj.getPin():
+        while newPin == obj.getPin(): #new pin must not be same as old
             print("New pin can't be same as old pin...!")
             newPin = input("Set your 4 digit new pin: ")
         atm.pinchange(obj, newPin)
@@ -119,12 +121,12 @@ def chooseFunctionality(obj):
         time.sleep(1)
         start()
     elif check == "4":
-        balanceCheck(obj)
-    elif check == "5":
+        balanceCheck(obj) #checking balance
+    elif check == "5": # when it is 5, will get Ministatement of last 10 transactions
         atm.getMinistatement(obj)
         time.sleep(1)
         start()
-    elif check == "6":
+    elif check == "6": # money transfer to other customer
         acc_no = input("Enter the account number of the receiver: ")
         acc_holder = input("Enter the name of the receiver: ")
         recv = Receiver(acc_no, acc_holder)
@@ -144,7 +146,7 @@ def chooseFunctionality(obj):
         chooseFunctionality(obj)
     
 
-def login():
+def login(): #this function is used for logging in 
     acc_no = input("Enter your account number: ")
     time.sleep(1)
     pin = input("Enter your pin: ")
@@ -163,11 +165,11 @@ def login():
         start() 
         
     
-def register():
+def register(): # this function is used for registering
     name = input("Enter your name: ")
     time.sleep(1)
     acc_no = generate_account_number()
-    while atm.isCustomer(acc_no):
+    while atm.isCustomer(acc_no): # assigns a unique account number
         acc_no = generate_account_number()
     print(acc_no,",this is your Account number.")
     time.sleep(1)
@@ -187,6 +189,6 @@ def exit1():
     
     
     
-start()
+start() # staring the program
 
 
